@@ -33,7 +33,7 @@ class AudioSelectionToCombine(QWidget):
 
     def audio_selection_to_combine_pressed(self, audio_selection_to_combine):
         try:
-            editing_methods.edit_audio(self.effect, audio_to_combine=audio_selection_to_combine)
+            editing_methods.combine(audio_selection_to_combine)
             write_to_the_change_history(self.effect,
                                         audio_to_combine=audio_selection_to_combine)
         except Exception as e:

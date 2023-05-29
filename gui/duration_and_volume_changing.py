@@ -46,11 +46,11 @@ class DurationAndVolumeChanging(QWidget):
 
     def on_ready_button_clicked(self):
         try:
-            editing_methods.edit_audio('change_volume',
-                                       time_interval=[self.time_interval_beginning.text(),
-                                                      self.time_interval_ending.text()],
-                                       volume=self.volume.text()
-                                       )
+            editing_methods.change_volume(
+                self.time_interval_beginning.text(),
+                self.time_interval_ending.text(),
+                self.volume.text()
+            )
             write_to_the_change_history('change_volume',
                                         time_interval=[self.time_interval_beginning.text(),
                                                        self.time_interval_ending.text()],

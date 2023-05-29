@@ -46,11 +46,11 @@ class DurationAndPlaybackSpeed(QWidget):
 
     def on_ready_button_clicked(self):
         try:
-            editing_methods.edit_audio('change_playback_speed',
-                                       time_interval=[self.time_interval_beginning.text(),
-                                                      self.time_interval_ending.text()],
-                                       speed=self.playback_speed_factor.text()
-                                       )
+            editing_methods.change_playback_speed(
+                self.time_interval_beginning.text(),
+                self.time_interval_ending.text(),
+                self.playback_speed_factor.text()
+            )
             write_to_the_change_history('change_playback_speed',
                                         time_interval=[self.time_interval_beginning.text(),
                                                        self.time_interval_ending.text()],
