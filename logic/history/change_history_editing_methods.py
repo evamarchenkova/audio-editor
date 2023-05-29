@@ -1,5 +1,8 @@
+from constants.paths import PATH_TO_CHANGE_HISTORY_FILE
+
+
 def write_to_the_change_history(effect, **kwargs):
-    with open("data/change_history.txt", "a") as file:
+    with open(PATH_TO_CHANGE_HISTORY_FILE, "a") as file:
         match effect:
             case 'combine':
                 audio_to_combine = kwargs['audio_to_combine']
@@ -28,14 +31,14 @@ def write_to_the_change_history(effect, **kwargs):
 
 
 def clear_history():
-    with open("data/change_history.txt", "w") as file:
+    with open(PATH_TO_CHANGE_HISTORY_FILE, "w") as file:
         file.truncate()
 
 
 def get_history():
     actions = ''
     actions_meta_information = ''
-    with open("data/change_history.txt") as file:
+    with open(PATH_TO_CHANGE_HISTORY_FILE) as file:
         for line in file.readlines():
             action, action_meta_information = line.split(';')
             match action:

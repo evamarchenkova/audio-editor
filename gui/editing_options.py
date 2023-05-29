@@ -8,6 +8,8 @@ from gui.audio_selection_to_combine import AudioSelectionToCombine
 from gui.effect_duration_selection import EffectDurationSelection
 from logic.audio.audio import get_instance
 from logic.audio.editing_methods import save
+from constants.paths import PATH_TO_TEMPORARY_AUDIO_FILE
+from constants.audio_file_extensions import MP3
 
 
 class EditingOptions(QWidget):
@@ -91,5 +93,5 @@ class EditingOptions(QWidget):
     def closeEvent(self, event):
         audio = get_instance()
         if not audio.is_saved:
-            save(r'data\temporary_file', 'mp3')
+            save(PATH_TO_TEMPORARY_AUDIO_FILE, MP3)
         super().closeEvent(event)

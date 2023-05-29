@@ -7,6 +7,8 @@ from gui.audio_visualization import get_audio_visualization
 from gui.messages.error_message import ErrorMessage
 from logic.audio import audio, editing_methods
 from logic.history.change_history_editing_methods import write_to_the_change_history
+from constants.gui.duration_and_volume_changing import *
+from constants.paths import PATH_TO_AUDIO_PLOT_IMAGE
 
 import datetime
 
@@ -63,8 +65,8 @@ class DurationAndVolumeChanging(QWidget):
 
     def set_range_slider(self):
         range_slider = QRangeSlider(self)
-        range_slider.setRange(0, audio.get_audio_duration_in_seconds())
-        range_slider.setSliderPosition([0, audio.get_audio_duration_in_seconds()])
+        range_slider.setRange(ZERO_VALUE, audio.get_audio_duration_in_seconds())
+        range_slider.setSliderPosition([ZERO_VALUE, audio.get_audio_duration_in_seconds()])
         range_slider.setOrientation(Qt.Orientation.Horizontal)
         range_slider.setGeometry(82, 110, 242, 10)
         range_slider.valueChanged.connect(lambda: self.on_range_slider_value_changed(range_slider))
@@ -80,7 +82,7 @@ class DurationAndVolumeChanging(QWidget):
         label = QLabel(self)
         label.setGeometry(30, 70, 340, 80)
         label.lower()
-        pixmap = QPixmap(r'data\audio_plot.png')
+        pixmap = QPixmap(PATH_TO_AUDIO_PLOT_IMAGE)
         pixmap = pixmap.scaledToHeight(label.height())
         pixmap = pixmap.scaledToWidth(label.width())
         label.setPixmap(pixmap)
@@ -89,9 +91,9 @@ class DurationAndVolumeChanging(QWidget):
         slider = QSlider(self)
         slider.setOrientation(Qt.Orientation.Horizontal)
         slider.setGeometry(82, 200, 222, 10)
-        slider.setRange(0, 200)
-        slider.setSingleStep(1)
-        slider.setSliderPosition(100)
+        slider.setRange(SLIDER_RANGE_MIN, SLIDER_RANGE_MAX)
+        slider.setSingleStep(SLIDER_SINGLE_STEP)
+        slider.setSliderPosition(SLIDER_POSITION)
         slider.valueChanged.connect(lambda: self.on_slider_value_changed(slider))
 
     def on_slider_value_changed(self, slider):

@@ -1,4 +1,5 @@
 from logic.audio.audio import get_time_in_ms, get_instance, get_audio_from_path
+from constants.logic.audio.editing_methods import *
 
 
 def edit_audio(effect, **kwargs):
@@ -45,13 +46,13 @@ def parse_speed(playback_speed_factor):
 def change_playback_speed(part_to_edit, playback_speed_factor):
     playback_speed_factor = parse_speed(playback_speed_factor)
     return part_to_edit._spawn(part_to_edit.raw_data, overrides={
-        "frame_rate": int(part_to_edit.frame_rate * playback_speed_factor)
+        'frame_rate': int(part_to_edit.frame_rate * playback_speed_factor)
     })
 
 
 def change_volume(part_to_edit, volume):
     volume = parse_speed(volume)
-    return part_to_edit.apply_gain(volume - 100)
+    return part_to_edit.apply_gain(volume - HUNDRED_VALUE)
 
 
 def cut(part_to_edit):
@@ -69,9 +70,9 @@ def combine(audio, audio_to_combine):
 def save(path_to_save_audio, audio_format):
     audio = get_instance()
     audio.audio.export('{}.{}'.format(path_to_save_audio, audio_format), format=audio_format)
-    audio.is_saved = 1
+    audio.is_saved = TRUE_VALUE
 
 
 def change_state_to_unsaved():
     audio = get_instance()
-    audio.is_saved = 0
+    audio.is_saved = FALSE_VALUE

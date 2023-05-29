@@ -7,6 +7,7 @@ from gui.audio_visualization import get_audio_visualization
 from gui.messages.error_message import ErrorMessage
 from logic.audio import audio, editing_methods
 from logic.history.change_history_editing_methods import write_to_the_change_history
+from constants.paths import PATH_TO_AUDIO_PLOT_IMAGE
 
 import datetime
 
@@ -76,7 +77,7 @@ class EffectDurationSelection(QWidget):
         label = QLabel(self)
         label.setGeometry(30, 70, 340, 80)
         label.lower()
-        pixmap = QPixmap(r'data\audio_plot.png')
+        pixmap = QPixmap(PATH_TO_AUDIO_PLOT_IMAGE)
         pixmap = pixmap.scaledToHeight(label.height())
         pixmap = pixmap.scaledToWidth(label.width())
         label.setPixmap(pixmap)
