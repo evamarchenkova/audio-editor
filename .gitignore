@@ -1,4 +1,3 @@
 .idea
-data/change_history.txt
-data/temporary_file.mp3
+/data/
 **/__pycache__/
