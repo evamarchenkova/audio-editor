@@ -1,6 +1,6 @@
 from PyQt6.QtCore import Qt
 from PyQt6.QtGui import QPixmap
-from PyQt6.QtWidgets import QWidget, QLabel, QPushButton
+from PyQt6.QtWidgets import QWidget, QLabel, QPushButton, QSlider
 from superqt import QRangeSlider
 
 from gui.audio_visualization import get_audio_visualization
@@ -11,15 +11,15 @@ from logic.history.change_history_editing_methods import write_to_the_change_his
 import datetime
 
 
-class EffectDurationSelection(QWidget):
-    def __init__(self, effect):
+class DurationAndPlaybackSpeed(QWidget):
+    def __init__(self):
         super().__init__()
-        self.effect = effect
         self.set_size()
         self.set_labels()
         self.set_ready_button()
         self.set_range_slider()
         self.set_audio_visualization()
+        self.set_slider()
 
     def set_size(self):
         self.setMinimumSize(200, 200)
@@ -34,6 +34,8 @@ class EffectDurationSelection(QWidget):
         self.time_interval_beginning.setGeometry(240, 52, 30, 10)
         self.time_interval_ending = QLabel(audio.get_formatted_audio_duration(), self)
         self.time_interval_ending.setGeometry(275, 52, 30, 10)
+        self.playback_speed_factor = QLabel('1.0x    ', self)
+        self.playback_speed_factor.move(324, 195)
 
     def set_ready_button(self):
         ready_button = QPushButton('Готово', self)
@@ -42,13 +44,15 @@ class EffectDurationSelection(QWidget):
 
     def on_ready_button_clicked(self):
         try:
-            editing_methods.edit_audio(self.effect,
+            editing_methods.edit_audio('change_playback_speed',
                                        time_interval=[self.time_interval_beginning.text(),
-                                                      self.time_interval_ending.text()]
+                                                      self.time_interval_ending.text()],
+                                       speed=self.playback_speed_factor.text()
                                        )
-            write_to_the_change_history(self.effect,
+            write_to_the_change_history('change_playback_speed',
                                         time_interval=[self.time_interval_beginning.text(),
-                                                       self.time_interval_ending.text()]
+                                                       self.time_interval_ending.text()],
+                                        speed=self.playback_speed_factor.text()
                                         )
         except Exception as e:
             self.show_error_message(e)
@@ -80,3 +84,15 @@ class EffectDurationSelection(QWidget):
         pixmap = pixmap.scaledToHeight(label.height())
         pixmap = pixmap.scaledToWidth(label.width())
         label.setPixmap(pixmap)
+
+    def set_slider(self):
+        slider = QSlider(self)
+        slider.setOrientation(Qt.Orientation.Horizontal)
+        slider.setGeometry(82, 200, 222, 10)
+        slider.setRange(25, 200)
+        slider.setSingleStep(10)
+        slider.setSliderPosition(100)
+        slider.valueChanged.connect(lambda: self.on_slider_value_changed(slider))
+
+    def on_slider_value_changed(self, slider):
+        self.playback_speed_factor.setText('{}x'.format(slider.value() / 100))

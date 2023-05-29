@@ -17,8 +17,12 @@ def get_audio_from_path(path_to_audio):
     return AudioSegment.from_file(path_to_audio)
 
 
+def get_audio_duration_in_seconds():
+    return len(get_instance().audio) // 1000
+
+
 def get_formatted_audio_duration():
-    audio_duration = len(get_instance().audio) // 1000
+    audio_duration = get_audio_duration_in_seconds()
     minutes = audio_duration // 60
     seconds = audio_duration % 60
     return '{}:0{}'.format(minutes, seconds) if seconds < 10 else '{}:{}'.format(minutes, seconds)
