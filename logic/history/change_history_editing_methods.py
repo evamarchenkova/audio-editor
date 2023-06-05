@@ -31,7 +31,7 @@ def write_to_the_change_history(effect, **kwargs):
 
 
 def clear_history():
-    with open(PATH_TO_CHANGE_HISTORY_FILE, "w") as file:
+    with open(PATH_TO_CHANGE_HISTORY_FILE, 'w') as file:
         file.truncate()
 
 
